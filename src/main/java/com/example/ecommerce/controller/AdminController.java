@@ -1,6 +1,7 @@
 package com.example.ecommerce.controller;
 
 import com.example.ecommerce.model.Product;
+import com.example.ecommerce.service.CategoryService;
 import com.example.ecommerce.service.ProductService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -16,8 +17,10 @@ public class AdminController {
 
 
     private final ProductService productService;
+    private final CategoryService categoryService;
 
-    public AdminController (ProductService productService){
+    public AdminController (ProductService productService, CategoryService categoryService) {
+        this.categoryService =  categoryService;
         this.productService = productService;
     }
 
@@ -25,6 +28,7 @@ public class AdminController {
     @GetMapping("/admin/product/add")
     public String showAddProductForm(Model model){
         model.addAttribute("product", new Product());
+        model.addAttribute("categories", categoryService.getAllCategories());
         return "admin/product/add";
     }
 
@@ -62,6 +66,7 @@ public class AdminController {
 
         Product product = productService.getProductById(id);
         model.addAttribute("product", product);
+        model.addAttribute("categories", categoryService.getAllCategories());
 
         return "admin/product/edit";
     }

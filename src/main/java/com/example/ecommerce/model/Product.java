@@ -3,6 +3,7 @@ package com.example.ecommerce.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "products")
@@ -11,6 +12,12 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotNull(message="Category is required")
+    @ManyToOne
+    @JoinColumn(name = "category_id") // FK column
+    private Category category;
+
 
     @NotBlank(message = "Product name is required")
     private String name;
@@ -40,6 +47,15 @@ public class Product {
 
     public void setName(String name) {  // ✅ MUST match
         this.name = name;
+    }
+
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     public String getDescription() {

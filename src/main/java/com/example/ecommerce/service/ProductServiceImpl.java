@@ -12,6 +12,7 @@ public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
 
+//    dependency injection
     public ProductServiceImpl(ProductRepository productRepository) {
         this.productRepository = productRepository;
     }

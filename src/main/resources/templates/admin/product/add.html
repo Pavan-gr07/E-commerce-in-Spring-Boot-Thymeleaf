@@ -31,6 +31,24 @@
                     <textarea class="form-control"
                               th:field="*{description}"></textarea>
                 </div>
+                <div class="mb-3">
+                    <label class="form-label">Category</label>
+
+                    <select class="form-select"
+                            th:field="*{category}">
+                        <option value="">-- Select Category --</option>
+
+                        <option th:each="cat : ${categories}"
+                                th:value="${cat.id}"
+                                th:text="${cat.name}">
+                        </option>
+                    </select>
+
+                    <div class="text-danger small"
+                         th:if="${#fields.hasErrors('category')}"
+                         th:errors="*{category}"></div>
+                </div>
+
 
                 <div class="row">
                     <div class="col-md-6 mb-3">
