@@ -54,6 +54,13 @@ public class AdminController {
         return "redirect:/admin/products";
     }
 
+    @GetMapping("/product/{id}")
+    public String viewProduct(@PathVariable long id, Model model) {
+        Product product = productService.getProductById(id);
+        model.addAttribute("product", product);
+        return "admin/product/view";
+    }
+
 
     @GetMapping("/admin/product/delete/{id}")
     public String deleteProduct(@PathVariable long id) {
