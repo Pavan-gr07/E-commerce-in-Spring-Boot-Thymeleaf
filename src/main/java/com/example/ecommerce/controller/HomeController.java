@@ -16,11 +16,11 @@ public class HomeController {
         this.productService = productService;
     }
 
-    @GetMapping("/")
-    public String home(Model model){
-        model.addAttribute("products",productService.getAllProducts());
-        return "home";
-    }
+//    @GetMapping("/")
+//    public String home(Model model){
+//        model.addAttribute("products",productService.getAllProducts());
+//        return "home";
+//    }
 
 
 

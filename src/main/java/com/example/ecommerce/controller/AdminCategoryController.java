@@ -4,13 +4,12 @@ package com.example.ecommerce.controller;
 import com.example.ecommerce.model.Category;
 import com.example.ecommerce.service.CategoryService;
 import jakarta.validation.Valid;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.filter.HiddenHttpMethodFilter;
 
 import java.util.List;
 
@@ -23,7 +22,15 @@ private final CategoryService categoryService;
 public AdminCategoryController (CategoryService categoryService){
         this.categoryService = categoryService;
 }
+
+    @Bean
+    public HiddenHttpMethodFilter hiddenHttpMethodFilter() {
+        return new HiddenHttpMethodFilter();
+    }
+
     // 1️⃣ LIST CATEGORIES
+
+
     @GetMapping
     public String listCategories(Model model){
     model.addAttribute("categories",categoryService.getAllCategories());
@@ -67,5 +74,13 @@ public AdminCategoryController (CategoryService categoryService){
         categoryService.updateCategory(category);
         return "redirect:/admin/categories";
     }
+
+
+    @DeleteMapping("/{id}")
+    public String deleteCategoryById(@PathVariable long id){
+        categoryService.deleteCategoryById(id);
+        return "redirect:/admin/categories";
+    }
+
 
 }

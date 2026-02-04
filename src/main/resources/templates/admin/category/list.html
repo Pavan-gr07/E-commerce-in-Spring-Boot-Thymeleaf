@@ -46,11 +46,18 @@
                             Edit
                         </a>
 
-                        <a th:href="@{/admin/categories/delete/{id}(id=${category.id})}"
-                           class="btn btn-sm btn-outline-danger"
-                           onclick="return confirm('Delete this category?')">
-                            Delete
-                        </a>
+                        <form th:action="@{/admin/categories/{id}(id=${category.id})}"
+                              method="post"
+                              style="display:inline;"
+                              onsubmit="return confirm('Delete this category?')">
+
+                            <input type="hidden" name="_method" value="delete"/>
+
+                            <button type="submit" class="btn btn-sm btn-outline-danger">
+                                Delete
+                            </button>
+                        </form>
+
                     </td>
                 </tr>
                 </tbody>

@@ -20,7 +20,7 @@ public class Category {
     private boolean active;
 
 
-    @OneToMany(mappedBy = "category")
+    @OneToMany(mappedBy = "category",cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Product> products;
 
     public Category() {
