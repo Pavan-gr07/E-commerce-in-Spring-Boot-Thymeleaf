@@ -1,17 +1,12 @@
 package com.example.ecommerce.controller;
 
-
-import com.example.ecommerce.model.CartItem;
 import com.example.ecommerce.service.CartService;
+
 import jakarta.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import java.util.HashMap;
-import java.util.Map;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/cart")
@@ -23,32 +18,34 @@ public class CartController {
         this.cartService = cartService;
     }
 
+    // 🛒 VIEW CART PAGE
     @GetMapping
-    public String viewCart(Model model){
-        model.addAttribute("cartItems",cartService.getCartItems());
-        model.addAttribute("total",cartService.getTotalAmount());
+    public String viewCart(Model model, HttpSession session) {
+
+        if (session.getAttribute("loggedUser") == null) {
+            return "redirect:/login";
+        }
+        model.addAttribute("cartItems", cartService.getCartItems().values());
+        model.addAttribute("total", cartService.getTotalAmount());
         return "user/cart";
     }
 
+    // ➕ ADD PRODUCT TO CART
     @GetMapping("/add/{id}")
-    public String addToCart(@PathVariable Long id, HttpSession session){
+    public String addToCart(@PathVariable Long id, HttpSession session) {
 
-        Map<Long,CartItem> cart = (Map<Long, CartItem>) session.getAttribute("cart");
-
-        if(cart == null){
-            cart = new HashMap<>();
+        if (session.getAttribute("user") == null) {
+            return "redirect:/login"; // Redirect to login if user is not authenticated
         }
 
         cartService.addToCart(id);
-
         return "redirect:/cart";
     }
 
+    // ❌ REMOVE PRODUCT FROM CART
     @GetMapping("/remove/{id}")
-    public String removeFromCart(@PathVariable Long id){
+    public String removeFromCart(@PathVariable Long id) {
         cartService.removeFromCart(id);
         return "redirect:/cart";
     }
-
-
 }

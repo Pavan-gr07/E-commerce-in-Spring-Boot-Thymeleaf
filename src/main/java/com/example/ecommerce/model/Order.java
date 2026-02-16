@@ -1,10 +1,7 @@
 package com.example.ecommerce.model;
 
-
 import jakarta.persistence.*;
-
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @Table(name = "orders")
@@ -14,37 +11,22 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
-    private String orderStatus;
-    private String payamentStatus;
-
     private double totalAmount;
-
+    private String orderStatus;
     private LocalDateTime orderDate;
 
-    @OneToMany(mappedBy = "order",cascade = CascadeType.ALL)
-    private List<OrderItem> orderItems;
+    // ⭐ ADD THIS
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
-
-//  ===============  getters & setters ===========
+    // getters & setters
     public Long getId() {
         return id;
     }
 
-    public String getOrderStatus() {
-        return orderStatus;
-    }
-
-    public void setOrderStatus(String orderStatus) {
-        this.orderStatus = orderStatus;
-    }
-
-    public String getPayamentStatus() {
-        return payamentStatus;
-    }
-
-    public void setPayamentStatus(String payamentStatus) {
-        this.payamentStatus = payamentStatus;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public double getTotalAmount() {
@@ -55,6 +37,14 @@ public class Order {
         this.totalAmount = totalAmount;
     }
 
+    public String getOrderStatus() {
+        return orderStatus;
+    }
+
+    public void setOrderStatus(String orderStatus) {
+        this.orderStatus = orderStatus;
+    }
+
     public LocalDateTime getOrderDate() {
         return orderDate;
     }
@@ -63,20 +53,12 @@ public class Order {
         this.orderDate = orderDate;
     }
 
-    public List<OrderItem> getOrderItems() {
-        return orderItems;
+    public User getUser() {
+        return user;
     }
 
-
-    public List<OrderItem> getProducts() {
-        return orderItems;
+    public void setUser(User user) {
+        this.user = user;
     }
-
-    public void setOrderItems(List<OrderItem> orderItems)
-    {
-        this.orderItems = orderItems;
-    }
-
-
 
 }

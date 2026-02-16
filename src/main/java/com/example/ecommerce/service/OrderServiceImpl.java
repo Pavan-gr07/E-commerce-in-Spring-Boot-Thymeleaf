@@ -16,12 +16,12 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<Order> getAllOrders(){
+    public List<Order> getAllOrders() {
         return orderRepository.findAll();
     }
 
     @Override
-    public Order getOrderById(Long id){
+    public Order getOrderById(Long id) {
         return orderRepository.findById(id).orElseThrow(() -> new RuntimeException("Order Not Found"));
     }
 

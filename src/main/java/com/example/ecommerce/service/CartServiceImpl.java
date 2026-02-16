@@ -14,47 +14,46 @@ public class CartServiceImpl implements CartService {
     private final ProductService productService;
     private final HttpSession session;
 
-    public CartServiceImpl(ProductService productService,HttpSession session){
+    public CartServiceImpl(ProductService productService, HttpSession session) {
         this.productService = productService;
         this.session = session;
     }
 
     @Override
-    public void addToCart(Long productId){
+    public void addToCart(Long productId) {
         Map<Long, CartItem> cart = getCartItems();
 
-        if(cart.containsKey(productId)){
-            cart.get(productId).setQuantity(cart.get(productId).getQuantity()+1);
-        }else{
+        if (cart.containsKey(productId)) {
+            cart.get(productId).setQuantity(cart.get(productId).getQuantity() + 1);
+        } else {
             Product product = productService.getProductById(productId);
-            cart.put(productId,new CartItem(product, 1));
+            cart.put(productId, new CartItem(product, 1));
         }
-        session.setAttribute("cart",cart);
+        session.setAttribute("cart", cart);
     }
 
     @Override
-    public void removeFromCart(Long productId){
+    public void removeFromCart(Long productId) {
         Map<Long, CartItem> cart = getCartItems();
         cart.remove(productId);
-        session.setAttribute("cart",cart);
+        session.setAttribute("cart", cart);
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    public Map<Long, CartItem> getCartItems(){
+    public Map<Long, CartItem> getCartItems() {
         Map<Long, CartItem> cart = (Map<Long, CartItem>) session.getAttribute("cart");
-        if(cart==null){
+        if (cart == null) {
             cart = new HashMap<>();
-            session.setAttribute("cart",cart);
+            session.setAttribute("cart", cart);
         }
         return cart;
     }
 
-@Override
-    public double getTotalAmount(){
+    @Override
+    public double getTotalAmount() {
         return getCartItems().values()
-                .stream().mapToDouble
-                        (CartItem :: getSubtotal).sum();
-}
+                .stream().mapToDouble(CartItem::getSubtotal).sum();
+    }
 
 }

@@ -1,97 +1,85 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <title>Edit Product</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
+
 <body>
 
-<!-- NAVBAR -->
-<div th:replace="fragments/navbar :: body"></div>
+    <!-- NAVBAR -->
+    <div th:replace="~{fragments/navbar :: body}"></div>
 
-<div class="container mt-5" style="max-width: 600px;">
-    <div class="card shadow-sm">
-        <div class="card-body">
 
-            <h4 class="mb-4">Edit Product</h4>
+    <div class="container mt-5" style="max-width: 600px;">
+        <div class="card shadow-sm">
+            <div class="card-body">
 
-            <!-- ⭐ th:object IS MANDATORY -->
-            <form th:action="@{/admin/product/update}"
-                  th:object="${product}"
-                  method="post">
+                <h4 class="mb-4">Edit Product</h4>
 
-                <!-- ⭐ ID MUST BE PRESENT -->
-                <input type="hidden" th:field="*{id}" />
+                <!-- ⭐ th:object IS MANDATORY -->
+                <form th:action="@{/admin/product/update}" th:object="${product}" method="post">
 
-                <div class="mb-3">
-                    <label class="form-label">Product Name</label>
-                    <input type="text" class="form-control"
-                           th:field="*{name}" />
-                    <div class="text-danger small"
-                         th:if="${#fields.hasErrors('name')}"
-                         th:errors="*{name}"></div>
-                </div>
+                    <!-- ⭐ ID MUST BE PRESENT -->
+                    <input type="hidden" th:field="*{id}" />
 
-                <div class="mb-3">
-                    <label class="form-label">Description</label>
-                    <textarea class="form-control"
-                              th:field="*{description}"></textarea>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Category</label>
-
-                    <select class="form-select"
-                            th:field="*{category}">
-                        <option value="">-- Select Category --</option>
-
-                        <option th:each="cat : ${categories}"
-                                th:value="${cat.id}"
-                                th:text="${cat.name}">
-                        </option>
-                    </select>
-
-                    <div class="text-danger small"
-                         th:if="${#fields.hasErrors('category')}"
-                         th:errors="*{category}"></div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label">Price</label>
-                        <input type="number" class="form-control"
-                               th:field="*{price}" />
-                        <div class="text-danger small"
-                             th:if="${#fields.hasErrors('price')}"
-                             th:errors="*{price}"></div>
+                    <div class="mb-3">
+                        <label class="form-label">Product Name</label>
+                        <input type="text" class="form-control" th:field="*{name}" />
+                        <div class="text-danger small" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
                     </div>
 
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label">Stock</label>
-                        <input type="number" class="form-control"
-                               th:field="*{stock}" />
-                        <div class="text-danger small"
-                             th:if="${#fields.hasErrors('stock')}"
-                             th:errors="*{stock}"></div>
+                    <div class="mb-3">
+                        <label class="form-label">Description</label>
+                        <textarea class="form-control" th:field="*{description}"></textarea>
                     </div>
-                </div>
+                    <div class="mb-3">
+                        <label class="form-label">Category</label>
 
-                <div class="form-check mb-4">
-                    <input class="form-check-input"
-                           type="checkbox"
-                           th:field="*{active}" />
-                    <label class="form-check-label">Active</label>
-                </div>
+                        <select class="form-select" th:field="*{category}">
+                            <option value="">-- Select Category --</option>
 
-                <div class="d-flex justify-content-end">
-                    <button class="btn btn-success">
-                        Update Product
-                    </button>
-                </div>
+                            <option th:each="cat : ${categories}" th:value="${cat.id}" th:text="${cat.name}">
+                            </option>
+                        </select>
 
-            </form>
+                        <div class="text-danger small" th:if="${#fields.hasErrors('category')}" th:errors="*{category}">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Price</label>
+                            <input type="number" class="form-control" th:field="*{price}" />
+                            <div class="text-danger small" th:if="${#fields.hasErrors('price')}" th:errors="*{price}">
+                            </div>
+                        </div>
 
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Stock</label>
+                            <input type="number" class="form-control" th:field="*{stock}" />
+                            <div class="text-danger small" th:if="${#fields.hasErrors('stock')}" th:errors="*{stock}">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-check mb-4">
+                        <input class="form-check-input" type="checkbox" th:field="*{active}" />
+                        <label class="form-check-label">Active</label>
+                    </div>
+
+                    <div class="d-flex justify-content-end">
+                        <button class="btn btn-success">
+                            Update Product
+                        </button>
+                    </div>
+
+                </form>
+
+            </div>
         </div>
     </div>
-</div>
 
 </body>
+
 </html>
